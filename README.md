@@ -115,3 +115,75 @@ public class HelloController {
 
 
 ###### 注意, pom文件中的依赖没有版本号, 这是因为parent的`spring-boot-starter-parent`中已经定义了
+
+# 使用普通Maven创建SpringBoot
+![image.png](https://upload-images.jianshu.io/upload_images/6214815-7d8c176df1f3e376.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://upload-images.jianshu.io/upload_images/6214815-b96488d62b79d9dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![目录结构](https://upload-images.jianshu.io/upload_images/6214815-03df251c5830a870.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### pom.xml
+![image.png](https://upload-images.jianshu.io/upload_images/6214815-71d948c9c7e12599.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+添加以下依赖(https://spring.io/guides/gs/rest-service/)
+```java
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.3.RELEASE</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+```
+添加Application类
+```java
+@SpringBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
+添加TestController类
+```java
+@RestController
+public class TestController {
+
+    @GetMapping("/hello/{name}")
+    public String hello(@PathVariable String name){
+        return "Hello " + name;
+    }
+}
+```
+运行main函数,访问8080,完成 
+
